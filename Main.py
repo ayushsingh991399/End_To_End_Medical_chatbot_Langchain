@@ -53,7 +53,7 @@ Helpful answer:"""
         qa = RetrievalQA.from_chain_type(
             llm=llm,
             chain_type="stuff",
-            retriever=vector_store.as_retriever(search_kwargs={'k': 3}),
+            retriever=vector_store.as_retriever(search_kwargs={'k': 5}),
             return_source_documents=True,
             chain_type_kwargs=chain_type_kwargs
         )
@@ -72,4 +72,5 @@ for chat in reversed(st.session_state.chat_history):
     st.markdown(f"**You:** {chat['question']}")
     st.markdown(f"**Bot:** {chat['answer']}")
     st.markdown("---")
+
 
