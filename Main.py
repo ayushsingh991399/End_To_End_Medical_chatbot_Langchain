@@ -7,44 +7,33 @@ from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-# -----------------------------
-# Load environment variables
-# -----------------------------
+
 load_dotenv()
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 INDEX_NAME = "medical-chatbot"
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
-# -----------------------------
-# Initialize session state
-# -----------------------------
+
 if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
 
-# -----------------------------
-# Sidebar
-# -----------------------------
+
 st.sidebar.title("Settings")
 st.sidebar.info("Currently using existing PDFs in Pinecone for Q&A.")
 
-# -----------------------------
-# Initialize embeddings & Pinecone
-# -----------------------------
 with st.spinner("Initializing embeddings and Pinecone..."):
     embeddings = huggingface_embeddings()
     vector_store = init_pinecone(INDEX_NAME, embeddings, PINECONE_API_KEY)
 
-# -----------------------------
-# Chatbot interface
-# -----------------------------
+
 st.title("🤖 Medical PDF Chatbot")
 st.write("Ask questions based on the existing PDFs indexed in Pinecone.")
 
-# Input form
 with st.form(key="chat_form"):
     user_question = st.text_input("Type your question:")
     submit_button = st.form_submit_button("Send")
 
-# Process question
+
 if submit_button and user_question:
     with st.spinner("Generating answer..."):
         prompt_template = """Use the following pieces of information to answer the user's question.
@@ -71,17 +60,16 @@ Helpful answer:"""
 
         result = qa({"query": user_question})
 
-        # Append to chat history
+
         st.session_state.chat_history.append({
             "question": user_question,
             "answer": result['result']
         })
 
-# -----------------------------
-# Display chat history in reverse order (latest first)
-# -----------------------------
+
 st.subheader("Chat History")
 for chat in reversed(st.session_state.chat_history):
     st.markdown(f"**You:** {chat['question']}")
     st.markdown(f"**Bot:** {chat['answer']}")
     st.markdown("---")
+
