@@ -1,11 +1,12 @@
 streamlit
 python-dotenv
 langchain
-langchain-google-generative-ai
+git+https://github.com/hwchase17/langchain-google-generative-ai.git
 pinecone
 huggingface-hub
 transformers
 sentence-transformers
 langchain-pinecone
 langchain-community
+
 pypdf
