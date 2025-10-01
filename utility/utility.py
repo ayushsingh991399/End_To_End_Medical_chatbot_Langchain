@@ -1,7 +1,7 @@
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
-from pinecone 
+from pinecone
 from langchain_pinecone import PineconeVectorStore
 
 def load_pdf(data):
@@ -43,4 +43,5 @@ def init_pinecone(index_name, embeddings, api_key):
     index = pc.Index(index_name)
     vector_store = PineconeVectorStore(index=index, embedding=embeddings)
     return vector_store
+
 
