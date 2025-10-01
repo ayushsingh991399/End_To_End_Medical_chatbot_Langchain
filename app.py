@@ -17,18 +17,14 @@ GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
 
-# -----------------------------
-# Sidebar: Option to use existing or upload new book
-# -----------------------------
-# Sidebar: Option to use existing or upload new book
-# Sidebar: Option to use existing or upload new book
+
 st.sidebar.title("Book Selection")
 book_option = st.sidebar.radio("Select source:", ["Use existing book", "Upload new book"], index=0)
 
 vector_store = None
 
 if book_option == "Upload new book":
-    # File uploader outside spinner
+   
     uploaded_files = st.sidebar.file_uploader(
         "Upload PDFs",
         type=["pdf"],
@@ -41,7 +37,6 @@ if book_option == "Upload new book":
             with open(os.path.join(temp_dir, f.name), "wb") as file:
                 file.write(f.getbuffer())
 
-        # Wrap only heavy processing inside spinner
         with st.spinner("Processing uploaded PDFs..."):
             docs = load_pdf(temp_dir)
             chunks = text_chunking(docs)
@@ -52,26 +47,21 @@ if book_option == "Upload new book":
         st.sidebar.success("New book added to Pinecone!")
 
 
-# -----------------------------
-# Initialize embeddings & Pinecone for chat if not already done
-# -----------------------------
+
 if vector_store is None:
     with st.spinner("Initializing embeddings and Pinecone..."):
         embeddings = huggingface_embeddings()
         vector_store = init_pinecone(INDEX_NAME, embeddings, PINECONE_API_KEY)
 
-# -----------------------------
-# Main Chatbot interface
-# -----------------------------
+
 st.title("🤖 Medical PDF Chatbot")
 st.write("Ask questions based on the PDFs indexed in Pinecone.")
 
-# Input form
+
 with st.form(key="chat_form"):
     user_question = st.text_input("Type your question:")
     submit_button = st.form_submit_button("Send")
 
-# Process question
 if submit_button and user_question:
     with st.spinner("Generating answer..."):
         prompt_template = """Use the following pieces of information to answer the user's question.
@@ -98,17 +88,15 @@ Helpful answer:"""
 
         result = qa({"query": user_question})
 
-        # Append to chat history
+       
         st.session_state.chat_history.append({
             "question": user_question,
             "answer": result['result']
         })
 
-# -----------------------------
-# Display chat history in reverse order (latest first)
-# -----------------------------
 st.subheader("Chat History")
 for chat in reversed(st.session_state.chat_history):
     st.markdown(f"**You:** {chat['question']}")
     st.markdown(f"**Bot:** {chat['answer']}")
     st.markdown("---")
+
