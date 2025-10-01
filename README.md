@@ -9,7 +9,6 @@ A Streamlit-based chatbot that allows users to ask questions from medical PDFs. 
 - Ask questions based on medical PDFs.
 - Supports multiple questions in a chat-like interface.
 - Stores PDFs in **Pinecone** for fast semantic search.
-- Ensures answers are **at least 20 words long**.
 - Option to **use existing PDFs** already uploaded or **add new PDFs**.
 - Chat history displayed in **reverse order** (latest question first).
 - Clean and interactive **Streamlit UI**.
@@ -49,11 +48,7 @@ venv\Scripts\activate      # Windows
 pip install -r requirements.txt
 ```
 
-> **Note**: If using Google Gemini LLM, install via GitHub:
 
-```bash
-pip install git+https://github.com/hwchase17/langchain-google-generative-ai.git@main
-```
 
 4. Set up environment variables:
 
@@ -120,3 +115,4 @@ MIT License
 - [LangChain Documentation](https://docs.langchain.com/)
 - [Pinecone Documentation](https://docs.pinecone.io/)
 - [HuggingFace Transformers](https://huggingface.co/docs/transformers/index)
+
