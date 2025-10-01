@@ -2,13 +2,13 @@ streamlit
 python-dotenv
 langchain
 pinecone
-huggingface-hub
-transformers
-sentence-transformers
+langchain-huggingface 
+sentence_transformers
 langchain-pinecone
 langchain-community
 langchain-google-genai==1.0.5
 pypdf
+
 
 
 
