@@ -1,0 +1,11 @@
+streamlit
+python-dotenv
+langchain
+langchain-google-generative-ai
+pinecone
+huggingface-hub
+transformers
+sentence-transformers
+langchain-pinecone
+langchain-community
+pypdf
