@@ -29,19 +29,20 @@ def huggingface_embeddings():
 
 
 
-def init_pinecone(index_name, embeddings, api_key):
-    pc = Pinecone(api_key=api_key)
+def init_pinecone(index_name, embeddings, api_key, environment="us-east-1"):
+    # Modern Pinecone initialization
+    pinecone.init(api_key=api_key, environment=environment)
 
-    if not pc.has_index(index_name):
-        pc.create_index(
+    if index_name not in pinecone.list_indexes():
+        pinecone.create_index(
             name=index_name,
             dimension=384,
             metric="cosine",
-            spec=ServerlessSpec(cloud="aws", region="us-east-1")
         )
 
-    index = pc.Index(index_name)
+    index = pinecone.Index(index_name)
     vector_store = PineconeVectorStore(index=index, embedding=embeddings)
     return vector_store
+
 
 
