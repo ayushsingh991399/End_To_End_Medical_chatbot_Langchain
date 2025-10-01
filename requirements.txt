@@ -7,7 +7,8 @@ transformers
 sentence-transformers
 langchain-pinecone
 langchain-community
-langchain-google-generative-ai
+langchain-google-genai==1.0.5
 pypdf
+
 
 
